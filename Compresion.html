@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compresión de String</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 50%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: lightgray;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Compresión de String</h1>
+
+    <label for="input-texto">Ingrese un texto:</label>
+    <input type="text" id="input-texto" placeholder="Ej: aabcccccaaa">
+    <button onclick="procesarTexto()">Comprimir</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Texto Original</th>
+                <th>Texto Comprimido</th>
+            </tr>
+        </thead>
+        <tbody id="tabla-resultados"></tbody>
+    </table>
+
+    <script>
+        // Función que comprime un string basado en los caracteres consecutivos repetidos
+        function comprimirString(str) {
+            if (str.length === 0) return ""; // Si la cadena está vacía, retorna vacío
+            
+            let resultado = "";
+            let contador = 1;
+
+            for (let i = 0; i < str.length; i++) {
+                if (str[i] === str[i + 1]) {
+                    contador++;
+                } else {
+                    resultado += str[i] + contador;
+                    contador = 1;
+                }
+            }
+
+            return resultado.length < str.length ? resultado : str; 
+            // Retorna el string comprimido solo si es más corto que el original
+        }
+
+        function procesarTexto() {
+            let texto = document.getElementById("input-texto").value.trim();
+
+            if (texto === "") {
+                alert("Por favor, ingrese un texto.");
+                return;
+            }
+
+            let textoComprimido = comprimirString(texto);
+
+            // Agregar resultado a la tabla
+            let tabla = document.getElementById("tabla-resultados");
+            let nuevaFila = document.createElement("tr");
+
+            nuevaFila.innerHTML = `
+                <td>${texto}</td>
+                <td>${textoComprimido}</td>
+            `;
+
+            tabla.appendChild(nuevaFila);
+        }
+    </script>
+
+</body>
+
+</html>

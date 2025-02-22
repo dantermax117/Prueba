@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarea</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 50%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: lightgray;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form id="form-tarea">
+        <div class="div-tarea">
+            <label for="tarea">Tarea:</label>
+        </div>
+        <div class="div-tarea">
+            <input id="tarea" type="text" class="from-tar" name="agrega-mas">
+        </div>
+        <div class="div-tarea">
+            <button type="submit">Agregar</button> <!-- Botón para agregar la tarea -->
+        </div>
+    </form>
+
+
+    <table id="tabla-tarea" style="border: 1;">
+        <thead>
+            <tr>
+                <th>Tarea</th> 
+                <th>Finalizado</th> 
+                <th>Acciones</th> 
+            </tr>
+        </thead>
+        <tbody id="cuerpo-tabla"></tbody>  
+    </table>
+
+    <script>
+        // Agregar un evento al formulario para manejar el envío
+        document.getElementById("form-tarea").addEventListener("submit", function (event) {
+            event.preventDefault(); // Evita que la página se recargue al enviar el formulario
+
+            var inputTarea = document.getElementById("tarea"); // Obtiene el campo de texto input tarea
+            var tareaTexto = inputTarea.value.trim(); // Obtiene el texto ingresado y elimina espacios antes y despues
+
+            if (tareaTexto === "") { // Verifica si el campo está vacío
+                alert("Por favor, ingresa una tarea."); // Muestra una alerta si el campo está vacío
+                return; // Sale de la función sin agregar la tarea
+            }
+
+            var tabla = document.getElementById("cuerpo-tabla"); // Obtiene la tabla donde se agregará la tarea
+            var nuevaFila = document.createElement("tr"); // Crea una nueva fila para la tabla
+
+            // Celda que mostrará la tarea
+            var celdaTarea = document.createElement("td");
+            celdaTarea.textContent = tareaTexto; // Asigna el texto de la tarea a la celda
+            celdaTarea.classList.add("tarea-texto"); // Agrega una clase para posibles estilos
+
+            // Celda del checkbox de finalización
+            var celdaCheckbox = document.createElement("td");
+            var checkbox = document.createElement("input"); // Crea un elemento input (checkbox)
+            checkbox.type = "checkbox"; // Define el tipo como checkbox
+            checkbox.addEventListener("change", function () { // Agrega evento para marcar como completado
+                if (checkbox.checked) { // Si el checkbox está marcado...
+                    celdaTarea.style.textDecoration = "line-through"; // Tacha el texto
+                } else { // Si se desmarca...
+                    celdaTarea.style.textDecoration = "none"; // Quita el tachado
+                }
+            });
+            celdaCheckbox.appendChild(checkbox); // Agrega el checkbox a la celda
+
+            // Celda de botones de acciones (Actualizar y Eliminar)
+            var celdaAcciones = document.createElement("td");
+
+            // Botón para actualizar la tarea
+            var btnActualizar = document.createElement("button");
+            btnActualizar.textContent = "Actualizar"; // Texto del botón
+            btnActualizar.addEventListener("click", function () { // Evento de actualización
+                var nuevoTexto = prompt("Edita la tarea:", celdaTarea.textContent); // Pide nuevo texto
+                if (nuevoTexto !== null && nuevoTexto.trim() !== "") { // Verifica que el usuario ingresó algo
+                    celdaTarea.textContent = nuevoTexto.trim(); // Actualiza el texto de la tarea
+                }
+            });
+
+            // Botón para eliminar la tarea
+            var btnEliminar = document.createElement("button");
+            btnEliminar.textContent = "Eliminar"; // Texto del botón
+            btnEliminar.addEventListener("click", function () { // Evento para eliminar
+                if (confirm("¿Estás seguro de eliminar esta tarea?")) { // Pide confirmación
+                    tabla.removeChild(nuevaFila); // Elimina la fila de la tabla
+                }
+            });
+
+            // Agrega los botones de acción a la celda de acciones
+            celdaAcciones.appendChild(btnActualizar);//Aqui se llama el la funcion de btnActualizar
+            celdaAcciones.appendChild(btnEliminar);//Aqui se llama la funcion de btnEliminar dentro de Acciones
+
+            // Agrega las celdas (tarea, checkbox y acciones) a la fila
+            nuevaFila.appendChild(celdaTarea);
+            nuevaFila.appendChild(celdaCheckbox);
+            nuevaFila.appendChild(celdaAcciones);
+
+            // Agrega la fila a la tabla
+            tabla.appendChild(nuevaFila);
+
+            // Limpia el campo de texto después de agregar la tarea
+            inputTarea.value = "";
+        });
+    </script>
+</body>
+
+</html>

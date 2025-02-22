@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparación de Cadenas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 50%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: lightgray;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form id="form-posicion">
+        <div class="div-posicion">
+            <label for="posicion-str-uno">Ingresa palabra 1</label>
+            <input id="posicion-str-uno" type="text" class="from-tar" name="agregar">
+        </div>
+        <div class="div-posicion">
+            <label for="posicion-str-dos">Ingresa palabra 2</label>
+            <input id="posicion-str-dos" type="text" class="from-tar" name="agregar">
+        </div>
+        <div class="div-posicion">
+            <button type="submit">Comparar</button>
+        </div>
+    </form>
+
+    <table style="border: 1;">
+        <thead>
+            <tr>
+                <th>Palabra 1</th>
+                <th>Palabra 2</th>
+                <th>Diferencias</th>
+            </tr>
+        </thead>
+
+        <tbody id="tabla-resultados"></tbody>
+
+    </table>
+
+    <script>
+        function comparacion(palabra1, palabra2) {
+            // Determinar la longitud mínima entre ambas cadenas
+            let minLength = Math.min(palabra1.length, palabra2.length);
+            let diferencias = 0;
+
+            // Comparar carácter por carácter hasta la longitud mínima
+            for (let i = 0; i < minLength; i++) {
+                if (palabra1[i] !== palabra2[i]) {
+                    diferencias++;
+                }
+            }
+
+            // Agregar las diferencias de longitud (si una palabra es más larga que la otra)
+            diferencias += Math.abs(palabra1.length - palabra2.length);
+            return diferencias;
+        }
+
+        document.getElementById("form-posicion").addEventListener("submit", function (event) {
+            event.preventDefault(); // Evitar recargar la página
+
+            // Obtener las palabras ingresadas
+            let palabra1 = document.getElementById("posicion-str-uno").value.trim();
+            let palabra2 = document.getElementById("posicion-str-dos").value.trim();
+
+            // Validar que ambos campos no estén vacíos
+            if (palabra1 && palabra2) {
+                // Calcular la diferencia
+                let diferencia = comparacion(palabra1, palabra2);
+
+                // Agregar resultado a la tabla
+                let tabla = document.getElementById("tabla-resultados");
+                let nuevaFila = document.createElement("tr");
+
+                // Crear celdas para las palabras y la diferencia
+                let celdaPalabra1 = document.createElement("td");
+                celdaPalabra1.textContent = palabra1;
+
+                let celdaPalabra2 = document.createElement("td");
+                celdaPalabra2.textContent = palabra2;
+
+                let celdaDiferencias = document.createElement("td");
+                celdaDiferencias.textContent = diferencia;
+
+                // Añadir las celdas a la fila
+                nuevaFila.appendChild(celdaPalabra1);
+                nuevaFila.appendChild(celdaPalabra2);
+                nuevaFila.appendChild(celdaDiferencias);
+
+                // Añadir la fila al tbody de la tabla
+                tabla.appendChild(nuevaFila);
+            } else {
+                alert("Por favor, ingresa ambas palabras.");
+            }
+        });
+    </script>
+
+</body>
+
+</html>
