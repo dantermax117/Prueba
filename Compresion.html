@@ -30,16 +30,26 @@
 <body>
 
     <h1>Compresión de String</h1>
+    <form id="form-str">
+        <div id="div-str">
+            <label for="input-texto">Ingrese un texto:</label>
+        </div>
+        <div id="div-str">
+            <input id="input-texto" type="text"  placeholder="Ej: aabcccccaaa">
+        </div>
+        
+        <div id="div-str">
+            <button type="submit" >Comprimir</button>
+        </div>
+        
 
-    <label for="input-texto">Ingrese un texto:</label>
-    <input type="text" id="input-texto" placeholder="Ej: aabcccccaaa">
-    <button onclick="procesarTexto()">Comprimir</button>
+    </form>
 
-    <table>
+
+    <table id="tabla-string">
         <thead>
             <tr>
                 <th>Texto Original</th>
-                <th>Texto Comprimido</th>
             </tr>
         </thead>
         <tbody id="tabla-resultados"></tbody>
@@ -51,20 +61,48 @@
             if (str.length === 0) return ""; // Si la cadena está vacía, retorna vacío
             
             let resultado = "";
-            let contador = 1;
+            let contador =1;
 
             for (let i = 0; i < str.length; i++) {
                 if (str[i] === str[i + 1]) {
                     contador++;
                 } else {
                     resultado += str[i] + contador;
-                    contador = 1;
+                    contador = contador+=1;
                 }
             }
 
-            return resultado.length < str.length ? resultado : str; 
+            return resultado.length <= str.length ? resultado : str; 
             // Retorna el string comprimido solo si es más corto que el original
         }
+
+
+        document.getElementById("form-str").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            
+
+            let compress = document.getElementById("input-texto").value.trim();
+            if (compress === "") {
+                alert("Por favor, ingrese un texto.");
+                return;
+            }
+            let inputStr = comprimirString(compress);
+            let tabla = document.getElementById("tabla-resultados");
+            let nuevaFila = document.createElement("tr");
+            let textoColum = document.createElement("td");
+            textoColum.textContent = inputStr;
+            textoColum.classList.add("compresion-texto");
+            nuevaFila.appendChild(textoColum);
+            tabla.appendChild(nuevaFila);
+
+            inputStr.value = "";
+            
+        })
+
+
+
+
 
         function procesarTexto() {
             let texto = document.getElementById("input-texto").value.trim();
@@ -79,13 +117,12 @@
             // Agregar resultado a la tabla
             let tabla = document.getElementById("tabla-resultados");
             let nuevaFila = document.createElement("tr");
+            let textoColum = document.createElement("td");
 
-            nuevaFila.innerHTML = `
-                <td>${texto}</td>
-                <td>${textoComprimido}</td>
-            `;
 
             tabla.appendChild(nuevaFila);
+            nuevaFila.appendChild(textoColum);
+
         }
     </script>
 
