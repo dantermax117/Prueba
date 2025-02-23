@@ -58,25 +58,25 @@
         document.getElementById("form-tarea").addEventListener("submit", function (event) {
             event.preventDefault(); // Evita que la página se recargue al enviar el formulario
 
-            var inputTarea = document.getElementById("tarea"); // Obtiene el campo de texto input tarea
-            var tareaTexto = inputTarea.value.trim(); // Obtiene el texto ingresado y elimina espacios antes y despues
+            let inputTarea = document.getElementById("tarea"); // Obtiene el campo de texto input tarea
+            let tareaTexto = inputTarea.value.trim(); // Obtiene el texto ingresado y elimina espacios antes y despues
 
             if (tareaTexto === "") { // Verifica si el campo está vacío
                 alert("Por favor, ingresa una tarea."); // Muestra una alerta si el campo está vacío
                 return; // Sale de la función sin agregar la tarea
             }
 
-            var tabla = document.getElementById("cuerpo-tabla"); // Obtiene la tabla donde se agregará la tarea
-            var nuevaFila = document.createElement("tr"); // Crea una nueva fila para la tabla
+            let tabla = document.getElementById("cuerpo-tabla"); // Obtiene la tabla donde se agregará la tarea
+            let nuevaFila = document.createElement("tr"); // Crea una nueva fila para la tabla
 
             // Celda que mostrará la tarea
-            var celdaTarea = document.createElement("td");
+            let celdaTarea = document.createElement("td");
             celdaTarea.textContent = tareaTexto; // Asigna el texto de la tarea a la celda
             celdaTarea.classList.add("tarea-texto"); // Agrega una clase para posibles estilos
 
             // Celda del checkbox de finalización
-            var celdaCheckbox = document.createElement("td");
-            var checkbox = document.createElement("input"); // Crea un elemento input (checkbox)
+            let celdaCheckbox = document.createElement("td");
+            let checkbox = document.createElement("input"); // Crea un elemento input (checkbox)
             checkbox.type = "checkbox"; // Define el tipo como checkbox
             checkbox.addEventListener("change", function () { // Agrega evento para marcar como completado
                 if (checkbox.checked) { // Si el checkbox está marcado...
@@ -88,20 +88,20 @@
             celdaCheckbox.appendChild(checkbox); // Agrega el checkbox a la celda
 
             // Celda de botones de acciones (Actualizar y Eliminar)
-            var celdaAcciones = document.createElement("td");
+            let celdaAcciones = document.createElement("td");
 
             // Botón para actualizar la tarea
-            var btnActualizar = document.createElement("button");
+            let btnActualizar = document.createElement("button");
             btnActualizar.textContent = "Actualizar"; // Texto del botón
             btnActualizar.addEventListener("click", function () { // Evento de actualización
-                var nuevoTexto = prompt("Edita la tarea:", celdaTarea.textContent); // Pide nuevo texto
+                let nuevoTexto = prompt("Edita la tarea:", celdaTarea.textContent); // Pide nuevo texto
                 if (nuevoTexto !== null && nuevoTexto.trim() !== "") { // Verifica que el usuario ingresó algo
                     celdaTarea.textContent = nuevoTexto.trim(); // Actualiza el texto de la tarea
                 }
             });
 
             // Botón para eliminar la tarea
-            var btnEliminar = document.createElement("button");
+            let btnEliminar = document.createElement("button");
             btnEliminar.textContent = "Eliminar"; // Texto del botón
             btnEliminar.addEventListener("click", function () { // Evento para eliminar
                 if (confirm("¿Estás seguro de eliminar esta tarea?")) { // Pide confirmación

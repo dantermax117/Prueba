@@ -100,30 +100,6 @@
             
         })
 
-
-
-
-
-        function procesarTexto() {
-            let texto = document.getElementById("input-texto").value.trim();
-
-            if (texto === "") {
-                alert("Por favor, ingrese un texto.");
-                return;
-            }
-
-            let textoComprimido = comprimirString(texto);
-
-            // Agregar resultado a la tabla
-            let tabla = document.getElementById("tabla-resultados");
-            let nuevaFila = document.createElement("tr");
-            let textoColum = document.createElement("td");
-
-
-            tabla.appendChild(nuevaFila);
-            nuevaFila.appendChild(textoColum);
-
-        }
     </script>
 
 </body>
